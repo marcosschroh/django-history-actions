@@ -11,7 +11,10 @@ django-history-actions
 .. image:: https://codecov.io/gh/marcosschroh/django-history-actions/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/marcosschroh/django-history-actions
 
-Django app to track all actions/events accross systems.
+This Project is in PROGRESS
+---------------------------
+
+Django app to track actions/events accros systems.
 
 Documentation
 -------------
