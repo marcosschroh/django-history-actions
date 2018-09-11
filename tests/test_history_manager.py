@@ -33,7 +33,7 @@ class TestHistoryManager(TestCase):
                 author='admin',
                 action=PROFILE_SAVE_ACTION,
                 system=settings.HISTORY_ACTIONS_SYSTEM,
-                object_uuid=profile.uuid,
+                object_pk=profile.pk,
                 content_type=self.profile_content_type
             )
         )
@@ -58,7 +58,7 @@ class TestHistoryManager(TestCase):
                 author='admin',
                 action=PROFILE_SAVE_ACTION,
                 system=settings.HISTORY_ACTIONS_SYSTEM,
-                object_uuid=profile.uuid,
+                object_pk=profile.pk,
                 content_type=self.profile_content_type,
                 notes=notes,
                 extra__isnull=False
@@ -74,8 +74,8 @@ class TestHistoryManager(TestCase):
             HistoryActions.objects.get(
                 author='admin',
                 action=PROFILE_SAVE_ACTION,
-                system='olms',
-                object_uuid=profile.uuid,
+                system='chat',
+                object_pk=profile.pk,
                 content_type=self.superprofile_content_type
             )
         )
@@ -88,7 +88,7 @@ class TestHistoryManager(TestCase):
         Because there is not a module called actions.py in auth app,
         it raise an ImportError
         """
-        with self.assertRaises(ImportError):
+        with self.assertRaises(SystemError):
             HistoryManager.create(
                 'admin',
                 PROFILE_SAVE_ACTION,

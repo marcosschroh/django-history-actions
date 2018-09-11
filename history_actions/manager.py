@@ -1,6 +1,5 @@
 import copy
 from importlib import import_module
-from future.utils import raise_from
 
 from django.conf import settings
 
@@ -16,9 +15,8 @@ class HistoryManager:
     def get_actions(app_label):
         try:
             return import_module('.actions', app_label)
-        except ImportError as exc:
-            raise raise_from(
-                ImportError('actions.py file does not exist in app {0}'.format(app_label)), exc)
+        except ImportError:
+            raise ImportError('actions.py file does not exist in app {0}'.format(app_label))    
 
     @classmethod
     def check_existing_action(cls, action, model_instance):

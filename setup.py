@@ -41,14 +41,13 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+readme = open('README.md').read()
 
 setup(
     name='django-history-actions',
     version=version,
     description="""Django app to track all actions/events accross systems.""",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     author='Marcos Schroh',
     author_email='schrohm@gmail.com',
     url='https://github.com/marcosschroh/django-history-actions',
@@ -56,7 +55,7 @@ setup(
         'history_actions',
     ],
     include_package_data=True,
-    install_requires=["django-model-utils>=2.0",],
+    install_requires=["django-model-utils>=2.0"],
     license="MIT",
     zip_safe=False,
     keywords='django-history-actions',
@@ -66,8 +65,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',

@@ -13,7 +13,8 @@ class Profile(models.Model):
         verbose_name='user',
         related_name='profiles',
         null=True,
-        blank=True
+        blank=True,
+        on_delete=models.CASCADE
     )
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -35,7 +36,7 @@ class Profile(models.Model):
 
 
 class SuperProfile(models.Model):
-    HISTORY_ACTIONS_SYSTEM = 'olms'
+    HISTORY_ACTIONS_SYSTEM = 'chat'
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
