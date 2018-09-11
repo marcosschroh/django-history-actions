@@ -2,6 +2,12 @@
 
 Django app to track actions/events accross systems.
 
+[![Build Status](https://travis-ci.org/marcosschroh/django-history-actions.svg?branch=master)](https://travis-ci.org/marcosschroh/django-history-actions)
+[![codecov](https://codecov.io/gh/marcosschroh/django-history-actions/branch/master/graph/badge.svg)](https://codecov.io/gh/marcosschroh/django-history-actions)
+[![GitHub license](https://img.shields.io/github/license/marcosschroh/django-history-actions.svg)](https://github.com/marcosschroh/django-history-actions/blob/master/LICENSE)
+![PyPI - Python Version](https://img.shields.io/badge/python-3-blue.svg)
+
+
 ## **Table of Contents**
 
 - [Features](#features)
@@ -119,7 +125,7 @@ class Chatdentity(MachuBaseModel):
 The system name is taken from:
 
 1. The `create` method `kwargs`.
-2. From `HISTORY_ACTIONS_SYSTEM` varialbel defined in the `settings.py`.
+2. From `HISTORY_ACTIONS_SYSTEM` variable defined in the `settings.py`.
 3. The class variable `HISTORY_ACTION_SYSTEM` defined in the model class.
 
 ### Signals
