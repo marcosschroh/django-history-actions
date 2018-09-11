@@ -7,6 +7,7 @@ Django app to track actions/events accross systems.
 - [Features](#features)
 - [Model Description](#model-description)
 - [Quickstart](#quickstart)
+- [Sistem Name](#system-name)
 - [Signals](#signals)
 - [Running Tests](#running-tests)
 
@@ -71,22 +72,30 @@ Now you can track History:
 ```python
 from history_actions.manager import HistoryManager
 
+# log an event
 HistoryManager.create(
     'an_author', 'INFO_TRAINING_SAVE_ACTION')
 
+# log an event linked to a model
 model_instance = ModelKlass.objects.first()
 HistoryManager.create(
-    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance)
+    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance=model_instance)
 
+# log an event linked to a model with more info
 username = User.ojects.first().username
 HistoryActions.create(
-    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance, actor=username, notes='My notes')
+    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance=model_instance, actor=username, notes='My notes')
 
 
+# log an event linked to a model and serialize the model
 username = User.ojects.first().username
 model_instance_dict = model_instance.to_dict()
 HistoryActions.create(
-    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance, actor=username, notes='My notes', extra=model_instace_dict)
+    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance=model_instance, actor=username, notes='My notes', extra=model_instace_dict)
+
+# use a different system
+HistoryActions.create(
+    'an_author', 'INFO_TRAINING_SAVE_ACTION', model_instance=model_instance, actor=username, notes='My notes', extra=model_instace_dict, system="custom")
 ```
 
 If you want to use a diferent system for model tracking, you can define it in:
@@ -104,6 +113,14 @@ class Chatdentity(MachuBaseModel):
     family_name = models.CharField(
         'Family Name(s)', max_length=200, default='')
 ```
+
+### System Name
+
+The system name is taken from:
+
+1. The `create` method `kwargs`.
+2. From `HISTORY_ACTIONS_SYSTEM` varialbel defined in the `settings.py`.
+3. The class variable `HISTORY_ACTION_SYSTEM` defined in the model class.
 
 ### Signals
 
