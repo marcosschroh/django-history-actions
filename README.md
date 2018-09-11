@@ -1,12 +1,37 @@
 # Django History Actions
 
-Django app to track all events accross the system.
+Django app to track actions/events accross systems.
 
-## Documentation
+## **Table of Contents**
 
------------------
+- [Features](#features)
+- [Model Description](#model-description)
+- [Quickstart](#quickstart)
+- [Signals](#signals)
+- [Running Tests](#running-tests)
 
-## Quickstart
+### Features
+
+1. Save history for your django models.
+2. Define global system name or per model
+3. Actions apps checker.
+4. Signals to track saved models.
+
+### Model Description:
+
+| Field        | Description      | Type | Required | Default             |
+|:-------------|:-----------------|:-----|:---------|:--------------------|
+| author       | Action author (username)    | str  | True     |                     |
+| action       | Action performed | str  | True     |                     |
+| system       | System name      | str  | True     | Taken from settings or model instance |
+| actor        | Actor involved in the action (username) | str | False    |  |
+| created      | Action created Datetime | Datetime |  False   | Auto Generated |
+| content_type | Content Type of the model instance | str   | False    | Auto Generated from model instance  |
+| object_pk    | Object pk           | int     |  False  | Taken from model instance |
+| notes        | Extra note related to the action | TextField     | False        | |
+| extra        | Extra field to store serializable objects.          | TextField     |  False       | |
+
+### Quickstart
 
 Install Django History Actions:
 
@@ -24,23 +49,8 @@ INSTALLED_APPS = (
 )
 
 # Define your System Name
-HISTORY_ACTIONS_SYSTEM = 'platform'
+HISTORY_ACTIONS_SYSTEM = 'main'
 ```
-
-### Model Fields:
-
-| Field        | Description      | Type | Required | Default             |
-|:-------------|:-----------------|:-----|:---------|:--------------------|
-| author       | Action author (username)    | str  | True     |                     |
-| action       | Action performed | str  | True     |                     |
-| system       | System name      | str  | True     | Taken from settings or model instance |
-| actor        | Actor involved in the action (username) | str | False    |  |
-| created      | Action created Datetime | Datetime |  False   | Auto Generated |
-| content_type | Content Type of the model instance | str   | False    | Auto Generated from model instance  |
-| object_pk    | Object pk           | int     |  False  | Taken from model instance |
-| notes        | Extra note related to the action | TextField     | False        | |
-| extra        | Extra field to store serializable objects.          | TextField     |  False       | |
-
 
 Define your actions.py inside your app
 
@@ -84,8 +94,8 @@ If you want to use a diferent system for model tracking, you can define it in:
 ```python
 # models.py
 
-class LQIdentity(MachuBaseModel):
-    HISTORY_ACTION_SYSTEM = 'olms'
+class Chatdentity(MachuBaseModel):
+    HISTORY_ACTION_SYSTEM = 'chat'
 
     user = models.OneToOneField(User)
     user_two = models.OneToOneField(User, related_name='user_manager')
@@ -95,16 +105,9 @@ class LQIdentity(MachuBaseModel):
         'Family Name(s)', max_length=200, default='')
 ```
 
-### Features
-
-1. Save history for your django models.
-2. Define global system name or per model
-3. Actions apps checker.
-4. Signal to track saved models.
+### Signals
 
 ### Running Tests
-
-Does the code actually work?
 
 ```bash
 source <YOURVIRTUALENV>/bin/activate
