@@ -3,7 +3,7 @@ import uuid
 
 from django.conf import settings
 
-from history_actions.manager import HistoryManager
+from history_actions.history_manager import HistoryManager
 from tests.app_test.actions import PROFILE_SAVE_ACTION
 
 

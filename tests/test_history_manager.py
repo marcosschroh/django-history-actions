@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from history_actions.models import HistoryActions
-from history_actions.manager import HistoryManager
+from history_actions.history_manager import HistoryManager
 from tests.app_test.models import Profile, SuperProfile
 from tests.app_test.actions import PROFILE_SAVE_ACTION
 
@@ -23,7 +23,9 @@ class TestHistoryManager(TestCase):
         self.profile_content_type = Profile()._meta.label
         self.superprofile_content_type = SuperProfile()._meta.label
 
-    @patch('history_actions.manager.HistoryManager.check_existing_action', return_value=PROFILE_SAVE_ACTION)
+    @patch(
+        'history_actions.history_manager.HistoryManager.check_existing_action',
+        return_value=PROFILE_SAVE_ACTION)
     def test_create_history(self, check_existing_action_fn):
         profile = Profile.objects.create(user=self.user)
         check_existing_action_fn.assert_called_once_with(PROFILE_SAVE_ACTION, profile)
@@ -38,7 +40,9 @@ class TestHistoryManager(TestCase):
             )
         )
 
-    @patch('history_actions.manager.HistoryManager.check_existing_action', return_value=PROFILE_SAVE_ACTION)
+    @patch(
+        'history_actions.history_manager.HistoryManager.check_existing_action',
+        return_value=PROFILE_SAVE_ACTION)
     def test_create_history_extra_fields(self, check_existing_action_fn):
         profile = Profile.objects.create(user=self.user)
         notes = 'extra notes..'
@@ -65,7 +69,7 @@ class TestHistoryManager(TestCase):
             )
         )
 
-    @patch('history_actions.manager.HistoryManager.check_existing_action', return_value=PROFILE_SAVE_ACTION)
+    @patch('history_actions.history_manager.HistoryManager.check_existing_action', return_value=PROFILE_SAVE_ACTION)
     def test_create_history_custom_system_name(self, check_existing_action_fn):
         profile = SuperProfile.objects.create()
         check_existing_action_fn.assert_called_once_with(PROFILE_SAVE_ACTION, profile)
@@ -95,7 +99,9 @@ class TestHistoryManager(TestCase):
                 model_instance=self.user
             )
 
-    @patch('history_actions.manager.HistoryManager.check_existing_action', return_value={'ACTIONS': {}})
+    @patch(
+        'history_actions.history_manager.HistoryManager.check_existing_action',
+        return_value={'ACTIONS': {}})
     def test_action_does_not_exist(self, get_actions_fn):
         profile = Profile()
 
