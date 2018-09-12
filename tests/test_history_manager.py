@@ -89,7 +89,7 @@ class TestHistoryManager(TestCase):
         Because there is not a module called actions.py in auth app,
         it raise an ImportError
         """
-        with self.assertRaises(SystemError):
+        with self.assertRaises(ImportError):
             HistoryManager.create(
                 'admin',
                 PROFILE_SAVE_ACTION,
