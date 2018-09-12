@@ -4,6 +4,7 @@ import uuid
 from django.conf import settings
 
 from history_actions.history_manager import HistoryManager
+from history_actions import mixins
 from tests.app_test.actions import PROFILE_SAVE_ACTION
 
 
@@ -18,6 +19,9 @@ class Profile(models.Model):
     )
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}-{}".format(self.user, self.uuid)
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
@@ -35,11 +39,22 @@ class Profile(models.Model):
         }
 
 
+class ProfilePostSaveSignal(models.Model, mixins.PostSaveHistory):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.uuid)
+
+
 class SuperProfile(models.Model):
     HISTORY_ACTIONS_SYSTEM = 'chat'
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.uuid)
 
     def save(self, *args, **kwargs):
         super(SuperProfile, self).save(*args, **kwargs)

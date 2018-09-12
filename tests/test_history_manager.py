@@ -84,9 +84,6 @@ class TestHistoryManager(TestCase):
             )
         )
 
-    def test_create_history_from_signal(self):
-        pass
-
     def test_actions_file_does_not_exist(self):
         """
         Because there is not a module called actions.py in auth app,
