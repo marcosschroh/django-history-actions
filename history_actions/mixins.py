@@ -8,7 +8,7 @@ class BaseSignalHistory:
 
     @classmethod
     def save_signal_callback(cls, sender, *args, **kwargs):
-        from history_actions.manager import HistoryManager
+        from history_actions.history_manager import HistoryManager
 
         instance = kwargs.get('instance')
 
